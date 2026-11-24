@@ -167,6 +167,12 @@ export function DriveWorld(props: Props) {
           const c = car.current
           const s = lastHit.current?.s ?? 0
           const aim = pointOnTrack(track, Math.min(track.length, s + 12))
+          const ahead: [number, number][] = []
+          for (let d = 0; d <= 200; d += 8) {
+            const p = pointOnTrack(track, Math.min(track.length, s + d))
+            ahead.push([p.x, p.z])
+          }
+          const objective = level.objective
           return {
             auto: autoRef.current,
             parked: parked.current,
@@ -183,6 +189,21 @@ export function DriveWorld(props: Props) {
             aimZ: aim.z,
             bayX: track.station.bay.x,
             bayZ: track.station.bay.z,
+            bayYaw: track.station.bay.yaw,
+            halfRoad: track.halfRoad,
+            gatesPassed: gatesPassed.current,
+            objective: {
+              type: objective.type,
+              collectCount: objective.collectCount ?? null,
+              timeLimit: objective.timeLimit ?? null,
+              maxCollisions: objective.maxCollisions ?? null,
+              gateCount: objective.gateCount ?? null,
+            },
+            ahead,
+            traffic: trafficPositions.current.map((t) => [t.x, t.z]),
+            items: track.collectibles
+              .filter((it) => !collected.current.includes(it.id))
+              .map((it) => [it.position.x, it.position.z, it.s]),
           }
         },
       }
