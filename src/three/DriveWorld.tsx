@@ -10,7 +10,7 @@ import { Station } from './world/Station'
 import { Collectibles, Gates, Rain, Traffic } from './world/Interactive'
 import { paletteFor } from '../game/themes'
 import { createCarState, stepCar, type CarInput, type CarState } from '../game/physics'
-import { nearestOnTrack, type Track } from '../game/track'
+import { nearestOnTrack, pointOnTrack, type Track } from '../game/track'
 import { audio } from '../game/audio'
 import type { LevelSpec, Settings } from '../game/types'
 import type { ParkStats, Telemetry } from '../game/runtime'
@@ -163,16 +163,28 @@ export function DriveWorld(props: Props) {
         setAuto: (on: boolean) => {
           autoRef.current = Boolean(on)
         },
-        snapshot: () => ({
-          auto: autoRef.current,
-          parked: parked.current,
-          s: lastHit.current?.s ?? 0,
-          length: track.length,
-          speed: car.current.speed,
-          collisions: car.current.collisions,
-          time: elapsed.current,
-          collected: collected.current.length,
-        }),
+        snapshot: () => {
+          const c = car.current
+          const s = lastHit.current?.s ?? 0
+          const aim = pointOnTrack(track, Math.min(track.length, s + 12))
+          return {
+            auto: autoRef.current,
+            parked: parked.current,
+            s,
+            length: track.length,
+            speed: c.speed,
+            collisions: c.collisions,
+            time: elapsed.current,
+            collected: collected.current.length,
+            x: c.position.x,
+            z: c.position.z,
+            yaw: c.yaw,
+            aimX: aim.x,
+            aimZ: aim.z,
+            bayX: track.station.bay.x,
+            bayZ: track.station.bay.z,
+          }
+        },
       }
     })
     return () => {
