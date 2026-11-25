@@ -1915,6 +1915,27 @@ input[type='range']::-moz-range-thumb {
   max-width: 760px;
 }
 
+.station-root--photos {
+  display: flex;
+  flex-direction: column;
+  padding: 38px 44px 28px;
+}
+
+.station-root--photos .station-gallery {
+  margin: auto 0;
+}
+
+.station-root--photos .photo-wall {
+  max-width: 1040px;
+  margin: 0 auto;
+  gap: 26px;
+}
+
+.station-gallery {
+  max-width: 1180px;
+  margin: 26px auto 0;
+}
+
 .shop-grid {
   max-width: 1180px;
   margin: 0 auto;
@@ -1998,7 +2019,7 @@ input[type='range']::-moz-range-thumb {
   max-width: 1180px;
   margin: 24px auto 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 20px;
   border-top: 1px solid var(--line-soft);
@@ -2009,6 +2030,13 @@ input[type='range']::-moz-range-thumb {
   margin: 5px 0 0;
   font-size: 11.5px;
   color: rgba(245, 245, 245, 0.42);
+}
+
+.station-root--photos .station-foot {
+  justify-content: center;
+  border-top: 0;
+  margin-top: 34px;
+  padding-top: 0;
 }
 
 .station-foot-actions {
