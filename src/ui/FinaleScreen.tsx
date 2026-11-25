@@ -5,6 +5,7 @@ import { FinaleScene } from '../three/FinaleScene'
 import { useGame } from '../game/store'
 import { audio } from '../game/audio'
 import { getScrapbook, mediaPath } from '../content/scrapbooks'
+import { ACHIEVEMENTS } from '../game/progress'
 import { getLevel } from '../content/levels'
 import { Plate } from './bits'
 
@@ -120,8 +121,7 @@ export function FinaleScreen() {
               <span className="micro-label">JOURNEY SUMMARY</span>
               <div className="finale-stats">
                 <div><span>STOPS COMPLETED</span><strong>{progress.completedLevels.length}/25</strong></div>
-                <div><span>ACHIEVEMENTS</span><strong>{progress.achievements.length}/7</strong></div>
-                <div><span>MEMORIES</span><strong>{Object.values(progress.discovered).reduce((n, a) => n + a.length, 0)}</strong></div>
+                <div><span>ACHIEVEMENTS</span><strong>{progress.achievements.length}/{ACHIEVEMENTS.length}</strong></div>
                 <div><span>COLLECTIBLES</span><strong>{Object.values(progress.collectibles).reduce((n, a) => n + a.length, 0)}</strong></div>
               </div>
             </div>

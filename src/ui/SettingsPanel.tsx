@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGame } from '../game/store'
 import { audio } from '../game/audio'
 import { Slider, Toggle, Stat } from './bits'
+import { ACHIEVEMENTS } from '../game/progress'
 import type { GraphicsQuality, Settings } from '../game/types'
 
 const QUALITIES: GraphicsQuality[] = ['low', 'medium', 'high']
@@ -96,7 +97,7 @@ export function SettingsPanel() {
           <h3>PROGRESS</h3>
           <div className="settings-stats">
             <Stat label="STOPS COMPLETED" value={`${progress.completedLevels.length}/25`} accent />
-            <Stat label="ACHIEVEMENTS" value={`${progress.achievements.length}/7`} />
+            <Stat label="ACHIEVEMENTS" value={`${progress.achievements.length}/${ACHIEVEMENTS.length}`} />
             <Stat label="JOURNEY STARTED" value={progress.journeyStarted ? 'YES' : 'NOT YET'} />
           </div>
           <p className="settings-hint">

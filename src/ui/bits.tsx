@@ -89,20 +89,6 @@ export function Stat({ label, value, accent }: { label: string; value: ReactNode
   )
 }
 
-export function Glyph({ kind }: { kind: string }) {
-  const glyphs: Record<string, string> = {
-    photos: '▤',
-    video: '▶',
-    counter: '✎',
-    drinks: '◇',
-    sweets: '✦',
-    food: '◍',
-    guestbook: '❖',
-    secret: '✜',
-  }
-  return <span className="glyph">{glyphs[kind] ?? '◈'}</span>
-}
-
 export function BackButton({ onClick, label = 'BACK' }: { onClick: () => void; label?: string }) {
   return (
     <button

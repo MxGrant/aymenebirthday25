@@ -255,7 +255,7 @@ export function DriveScreen() {
                 </>
               )}
             </div>
-            {stats.objectiveMet && <p className="modal-note">The station is open. Photographs, food, sweets, drinks and one hidden drawer.</p>}
+            {stats.objectiveMet && <p className="modal-note">The station is open. Its photo wall is waiting.</p>}
           </div>
         </div>
       )}

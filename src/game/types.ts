@@ -118,7 +118,6 @@ export interface Progress {
   unlockedLevel: number
   completedLevels: number[]
   collectibles: Record<number, string[]>
-  discovered: Record<number, string[]>
   achievements: string[]
   bestTimes: Record<number, number>
   lastLevel: number

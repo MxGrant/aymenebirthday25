@@ -21,7 +21,6 @@ export const DEFAULT_PROGRESS: Progress = {
   unlockedLevel: 1,
   completedLevels: [],
   collectibles: {},
-  discovered: {},
   achievements: [],
   bestTimes: {},
   lastLevel: 1,
@@ -31,12 +30,10 @@ export const DEFAULT_PROGRESS: Progress = {
 
 export const ACHIEVEMENTS: Achievement[] = [
   { id: 'first-drive', name: 'FIRST DRIVE', description: 'Complete Stop 01 — The Grand Departure.', icon: '◈' },
-  { id: 'memory-maker', name: 'MEMORY MAKER', description: 'Discover 10 scrapbook items across the journey.', icon: '❖' },
   { id: 'sweet-tooth', name: 'SWEET TOOTH', description: 'Collect every sweet in The Sweet Stop.', icon: '✦' },
   { id: 'petrolhead', name: 'PETROLHEAD', description: 'Conquer the racing circuit in No Looking Back.', icon: '⚙' },
   { id: 'halfway-legend', name: 'HALFWAY LEGEND', description: 'Reach Stop 15, the halfway pit stop.', icon: '◉' },
   { id: 'road-trip-champion', name: 'ROAD TRIP CHAMPION', description: 'Complete all 25 stops.', icon: '★' },
-  { id: 'secret-stop', name: 'THE SECRET STOP', description: 'Find a hidden drawer in any petrol station.', icon: '✜' },
 ]
 
 function readJson<T>(key: string, fallback: T): T {
@@ -56,9 +53,10 @@ export function loadProgress(): Progress {
     ...DEFAULT_PROGRESS,
     ...loaded,
     completedLevels: Array.isArray(loaded.completedLevels) ? loaded.completedLevels.filter((n) => typeof n === 'number') : [],
-    achievements: Array.isArray(loaded.achievements) ? loaded.achievements : [],
+    achievements: Array.isArray(loaded.achievements)
+      ? loaded.achievements.filter((id) => ACHIEVEMENTS.some((a) => a.id === id))
+      : [],
     collectibles: loaded.collectibles && typeof loaded.collectibles === 'object' ? loaded.collectibles : {},
-    discovered: loaded.discovered && typeof loaded.discovered === 'object' ? loaded.discovered : {},
     bestTimes: loaded.bestTimes && typeof loaded.bestTimes === 'object' ? loaded.bestTimes : {},
     unlockedLevel: Math.min(25, Math.max(1, Number(loaded.unlockedLevel) || 1)),
   }
@@ -128,7 +126,6 @@ export function applyCompletion(progress: Progress, payload: CompletionPayload):
   p.unlockedLevel = Math.max(p.unlockedLevel, next)
   p.lastLevel = Math.min(25, payload.levelId + 1)
 
-  const memCount = Object.values(p.discovered).reduce((sum, arr) => sum + (arr?.length ?? 0), 0)
   const allDone = p.completedLevels.length >= 25
   const sweetDone = p.collectibles[8]?.length >= 6
 
@@ -143,33 +140,15 @@ export function applyCompletion(progress: Progress, payload: CompletionPayload):
   }
 
   grant('first-drive', p.completedLevels.includes(1))
-  grant('memory-maker', memCount >= 10)
   grant('sweet-tooth', Boolean(sweetDone))
   grant('petrolhead', p.completedLevels.includes(23))
   grant('halfway-legend', p.completedLevels.includes(15))
   grant('road-trip-champion', allDone)
-  grant('secret-stop', Object.values(p.discovered).some((arr) => arr.includes('secret')))
 
   p.achievements = Array.from(unlocked)
   if (allDone) p.finaleSeen = p.finaleSeen || payload.levelId === 25
 
   return { progress: p, newAchievements: newly, unlockedNext }
-}
-
-export function recordDiscovery(progress: Progress, levelId: number, itemId: string): Progress {
-  const current = progress.discovered[levelId] ?? []
-  if (current.includes(itemId)) return progress
-  const updated: Progress = {
-    ...progress,
-    discovered: { ...progress.discovered, [levelId]: [...current, itemId] },
-  }
-  const total = Object.values(updated.discovered).reduce((sum, arr) => sum + (arr?.length ?? 0), 0)
-  const hasSecret = Object.values(updated.discovered).some((arr) => arr.includes('secret'))
-  const achieved = new Set(updated.achievements)
-  if (total >= 10) achieved.add('memory-maker')
-  if (hasSecret) achieved.add('secret-stop')
-  updated.achievements = Array.from(achieved)
-  return updated
 }
 
 export const formatTime = (seconds: number) => {

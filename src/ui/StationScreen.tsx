@@ -55,7 +55,6 @@ export function StationScreen() {
   const levelId = useGame((s) => s.stationLevel)
   const pendingStats = useGame((s) => s.pendingStats)
   const preview = useGame((s) => s.previewStation)
-  const recordItem = useGame((s) => s.recordItem)
   const finishLevel = useGame((s) => s.finishLevel)
   const setScreen = useGame((s) => s.setScreen)
   const setFinaleSeen = useGame((s) => s.setFinaleSeen)
@@ -66,10 +65,6 @@ export function StationScreen() {
   useEffect(() => {
     audio.startMusic('station')
   }, [])
-
-  useEffect(() => {
-    recordItem(levelId, 'photos')
-  }, [levelId, recordItem])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { GarageScene } from '../three/GarageScene'
 import { useGame } from '../game/store'
 import { audio } from '../game/audio'
+import { ACHIEVEMENTS } from '../game/progress'
 import { LEVELS, getLevel } from '../content/levels'
 import { Plate, Stat, BackButton } from './bits'
 import { LevelSelect } from './LevelSelect'
@@ -165,8 +166,7 @@ export function MenuShell() {
             <div className="progress-card">
               <Stat label="STOPS COMPLETED" value={`${progress.completedLevels.length}/25`} accent />
               <Stat label="COLLECTIBLES" value={Object.values(progress.collectibles).reduce((n, a) => n + a.length, 0)} />
-              <Stat label="MEMORIES FOUND" value={Object.values(progress.discovered).reduce((n, a) => n + a.length, 0)} />
-              <Stat label="ACHIEVEMENTS" value={`${progress.achievements.length}/7`} />
+              <Stat label="ACHIEVEMENTS" value={`${progress.achievements.length}/${ACHIEVEMENTS.length}`} />
               <div className="route-strip">
                 {LEVELS.map((l) => (
                   <i

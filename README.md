@@ -36,9 +36,8 @@ collectibles and petrol station. Parking in the illuminated bay ends the leg,
 finishing the stop unlocks the next one, and progress is saved to
 `localStorage` (`aymene25.progress.v2`).
 
-Each station holds eight scrapbook objects: the photo wall, the television, the
-counter message, the drinks fridge, the sweet shelf, the food display, the
-guestbook and one hidden drawer. They open with clearly labelled placeholders
+Each station holds nothing but its photo wall: the stop's photographs, hung as
+polaroids with their captions. Empty slots show a clearly labelled placeholder
 until you add your own media.
 
 ## Adding photographs, video and audio

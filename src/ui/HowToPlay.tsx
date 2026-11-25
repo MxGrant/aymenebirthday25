@@ -29,8 +29,8 @@ export function HowToPlay() {
         <section className="howto-block">
           <h3>THE IDEA</h3>
           <p>
-            Drive to the petrol station at the end of each stop. Park inside the illuminated bay, get out, and explore the
-            station. Every stop holds a scrapbook: photographs, a video, messages, food, sweets, drinks and one hidden drawer.
+            Drive to the petrol station at the end of each stop. Park inside the illuminated bay, get out, and look at the
+            photo wall — every station holds its own photographs of the trip.
           </p>
           <p>
             Stops unlock in order. Finish one to open the next. You can replay any completed stop from LEVEL SELECT — best times

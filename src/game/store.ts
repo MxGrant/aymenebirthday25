@@ -6,7 +6,6 @@ import {
   applyCompletion,
   loadProgress,
   loadSettings,
-  recordDiscovery,
   saveProgress,
   saveSettings,
   type CompletionPayload,
@@ -52,7 +51,6 @@ interface GameStore {
   startLevel: (id: number) => void
   enterStation: (id: number) => void
   finishLevel: (payload: CompletionPayload) => LevelResult
-  recordItem: (levelId: number, itemId: string) => void
   discoverAchievement: (id: string) => void
   updateSettings: (patch: Partial<Settings>) => void
   resetProgress: () => void
@@ -114,14 +112,6 @@ export const useGame = create<GameStore>((set, get) => ({
     }
     set({ progress: outcome.progress, result, screen: 'complete' })
     return result
-  },
-
-  recordItem: (levelId, itemId) => {
-    const progress = recordDiscovery(get().progress, levelId, itemId)
-    if (progress !== get().progress) {
-      saveProgress(progress)
-      set({ progress })
-    }
   },
 
   discoverAchievement: (id) => {
